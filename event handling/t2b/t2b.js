@@ -770,4 +770,49 @@ const restaurants = [
   },
 ];
 
-// your code here
+restaurants.sort((a, b) => a.name.localeCompare(b.name));
+
+const table = document.getElementById('restaurant-table');
+const dialog = document.getElementById('restaurant-dialog');
+const closeBtn = document.getElementById('close-dialog');
+
+const dialogName = document.getElementById('dialog-name');
+const dialogAddress = document.getElementById('dialog-address');
+const dialogPostal = document.getElementById('dialog-postal');
+const dialogCity = document.getElementById('dialog-city');
+const dialogPhone = document.getElementById('dialog-phone');
+const dialogCompany = document.getElementById('dialog-company');
+
+restaurants.forEach(restaurant => {
+  const row = document.createElement('tr');
+  const nameCell = document.createElement('td');
+  const addressCell = document.createElement('td');
+
+  nameCell.textContent = restaurant.name;
+  addressCell.textContent = restaurant.address;
+
+  row.appendChild(nameCell);
+  row.appendChild(addressCell);
+
+  row.addEventListener('click', () => {
+    document
+      .querySelectorAll('#restaurant-table tr')
+      .forEach(r => r.classList.remove('highlight'));
+    row.classList.add('highlight');
+
+    dialogName.textContent = restaurant.name;
+    dialogAddress.textContent = restaurant.address;
+    dialogPostal.textContent = restaurant.postalCode;
+    dialogCity.textContent = restaurant.city;
+    dialogPhone.textContent = restaurant.phone;
+    dialogCompany.textContent = restaurant.company;
+
+    dialog.showModal();
+  });
+
+  table.appendChild(row);
+});
+
+closeBtn.addEventListener('click', () => {
+  dialog.close();
+});
