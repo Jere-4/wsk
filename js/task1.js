@@ -13,5 +13,3 @@ const getUserById = async (id) => {
 
 getUserById(1);
 getUserById(2);
-
-console.log('Hello!');
