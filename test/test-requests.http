@@ -1,5 +1,7 @@
 # api http test requests for VSCode rest client
 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwibmFtZSI6IlVsbGEgUyIsInVzZXJuYW1lIjoidWxsYXMyIiwiZW1haWwiOiJ1bGxhc0BtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI1MjA3NTEsImV4cCI6MTc2MjYwNzE1MX0.-TY-w_QNUCdx_NCDt9l5bJPK-kVQUdxadnD1zZf8RFA
+
 ### get cats
 GET http://localhost:3000/api/v1/cats
 
@@ -20,6 +22,7 @@ Content-Type: application/json
 
 ### post new cat with image
 POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 --MyBoundary
@@ -61,14 +64,20 @@ Content-Type: application/json
 ### Delete cat by id
 DELETE http://127.0.0.1:3000/api/v1/cats/9590
 
+### Get cats by user
+GET http://localhost:3000/api/v1/cats/user
+Authorization: Bearer {{token}}
+
 
 # Testing the user routes
 
 ### get user
 GET http://localhost:3000/api/v1/users
+Authorization: Bearer {{token}}
+
 
 ### get user by id
-GET http://localhost:3000/api/v1/users/37
+GET http://localhost:3000/api/v1/users/38
 
 ### post new user
 POST http://localhost:3000/api/v1/users
@@ -76,11 +85,29 @@ Content-Type: application/json
 
 {
     "name": "Ulla S",
-    "username": "ullas",
+    "username": "ullas2",
     "email": "ullas@metropolia.fi",
-    "role": "admin",
+    "role": "user",
     "password": "password"
 }
+
+### post auth/login
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "username": "ullas2",
+    "password": "password"
+}
+
+
+### Get my user info
+GET http://localhost:3000/api/v1/auth/me
+Authorization: Bearer {(token)}
+
+### Get my cats
+GET http://localhost:3000/api/v1/cats/user
+Authorization: Bearer {(token)}
 
 ### Modify existing user
 PUT http://127.0.0.1:3000/api/v1/users/3609
@@ -88,7 +115,7 @@ Content-Type: application/json
 
 {
     "name": "Ulla S",
-    "username": "ullas",
+    "username": "ullas2",
     "email": "ullas@metropolia.fi",
     "role": "admin",
     "password": "password"
