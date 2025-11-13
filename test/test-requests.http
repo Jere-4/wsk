@@ -1,11 +1,28 @@
+# api http test requests for VSCode rest client
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwibmFtZSI6IlVsbGEgUyIsInVzZXJuYW1lIjoidWxsYXMyIiwiZW1haWwiOiJ1bGxhc0BtZXRyb3BvbGlhLmZpIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjI1MjA3NTEsImV4cCI6MTc2MjYwNzE1MX0.-TY-w_QNUCdx_NCDt9l5bJPK-kVQUdxadnD1zZf8RFA
+
 ### get cats
 GET http://localhost:3000/api/v1/cats
 
 ### get cat by id
-GET http://localhost:3000/api/v1/cats/9592
+GET http://localhost:3000/api/v1/cats/41
+
+### post new cat
+POST http://localhost:3000/api/v1/cats
+Content-Type: application/json
+
+{
+  "cat_name": "New Cat",
+  "weight": 5,
+  "owner": 3333,
+  "filename": "https://loremflickr.com/320/240/cat",
+  "birthdate": "2022-01-01"
+}
 
 ### post new cat with image
 POST http://127.0.0.1:3000/api/v1/cats HTTP/1.1
+Authorization: Bearer {{token}}
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 --MyBoundary
@@ -19,66 +36,90 @@ Content-Disposition: form-data; name="weight"
 --MyBoundary
 Content-Disposition: form-data; name="owner"
 
-3602
+37
 --MyBoundary
 Content-Disposition: form-data; name="birthdate"
 
 2023-10-08
 --MyBoundary
-Content-Disposition: form-data; name="file"; filename="cat.jpg"
+Content-Disposition: form-data; name="file"; filename="dog.jpg"
 Content-Type: image/jpeg
 
-< ./cat.jpg
+< ./dog.jpg
 --MyBoundary--
 
-### modify existing cat
-PUT http://localhost:3000/api/v1/cats/9594
+
+### Modify existing cat
+PUT http://127.0.0.1:3000/api/v1/cats/9594
 Content-Type: application/json
 
 {
   "cat_name": "Frank da CAT",
   "weight": 11,
-  "owner": 3689,
-  "filename": "dfjafpeajfnd",
+  "owner": 3609,
+  "filename": "f3dbafakjsdfhg4",
   "birthdate": "2021-10-12"
 }
 
-### delete cat by id
-DELETE http://localhost:3000/api/v1/cats/9590
+### Delete cat by id
+DELETE http://127.0.0.1:3000/api/v1/cats/9590
+
+### Get cats by user
+GET http://localhost:3000/api/v1/cats/user
+Authorization: Bearer {{token}}
 
 
+# Testing the user routes
 
-### get users
+### get user
 GET http://localhost:3000/api/v1/users
+Authorization: Bearer {{token}}
+
 
 ### get user by id
-GET http://localhost:3000/api/v1/users/3609
+GET http://localhost:3000/api/v1/users/38
 
 ### post new user
 POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-  "user_id": 3609,
-  "name": "John Doe",
-  "username": "johndoe",
-  "email": "john@metropolia.fi",
-  "role": "user",
-  "password": "password"
+    "name": "Ulla S",
+    "username": "ullas2",
+    "email": "ullas@metropolia.fi",
+    "role": "user",
+    "password": "password"
 }
 
-### modify existing user
-PUT http://localhost:3000/api/v1/users/3820
+### post auth/login
+POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-    "user_id": 3820,
-    "name": "Adam Smith",
-    "username": "adamsmith",
-    "email": "adam@metropolia.fi",
-    "role": "user3",
-    "password": "password3"
+    "username": "ullas2",
+    "password": "password"
 }
 
-### delete user by id
-DELETE http://localhost:3000/api/v1/users/3742
+
+### Get my user info
+GET http://localhost:3000/api/v1/auth/me
+Authorization: Bearer {(token)}
+
+### Get my cats
+GET http://localhost:3000/api/v1/cats/user
+Authorization: Bearer {(token)}
+
+### Modify existing user
+PUT http://127.0.0.1:3000/api/v1/users/3609
+Content-Type: application/json
+
+{
+    "name": "Ulla S",
+    "username": "ullas2",
+    "email": "ullas@metropolia.fi",
+    "role": "admin",
+    "password": "password"
+}
+
+### Delete cat by user
+DELETE http://127.0.0.1:3000/api/v1/users/3609
